@@ -1,18 +1,42 @@
-"""Constants for the Eesti Keskkonnateenused integration."""
+"""Constants for the Eesti jäätmevedu integration."""
 
 from __future__ import annotations
 
 from datetime import timedelta
 from typing import Final
 
-DOMAIN: Final = "keskkonnateenused"
+DOMAIN: Final = "jaatmevedu"
 
 CONF_CONTRACT_NUMBER: Final = "contract_number"
 
-API_URL: Final = "https://cms.keskkonnateenused.ee/wp-json/general-purpose-api/upcoming-discharges"
-LOOKUP_URL: Final = "https://www.keskkonnateenused.ee/klienditugi/j%C3%A4rgmine-veop%C3%A4ev"
+CONF_PROVIDER: Final = "provider"
+CONF_AREA: Final = "area"
+CONF_ADDRESS: Final = "address"
+CONF_UNIT: Final = "unit"
+CONF_CLIENT_CODE: Final = "client_code"
+CONF_SEARCH: Final = "search"
 
-MANUFACTURER: Final = "Eesti Keskkonnateenused AS"
+PROVIDER_EKT: Final = "ekt"
+PROVIDER_RAGNSELLS: Final = "ragnsells"
+PROVIDER_TJT: Final = "tjt"
+
+# Carrier names double as device names, so EKT entity IDs keep the
+# "eesti_keskkonnateenused_" prefix they had before the rename.
+PROVIDER_NAMES: Final[dict[str, str]] = {
+    PROVIDER_EKT: "Eesti Keskkonnateenused",
+    PROVIDER_RAGNSELLS: "Ragn-Sells",
+    PROVIDER_TJT: "TJT",
+}
+PROVIDER_URLS: Final[dict[str, str]] = {
+    PROVIDER_EKT: "https://eteenindus.keskkonnateenused.ee/",
+    PROVIDER_RAGNSELLS: "https://www.ragnsells.ee/iseteenindus",
+    PROVIDER_TJT: "https://iseteenindus.tjt.ee/",
+}
+PROVIDER_MANUFACTURERS: Final[dict[str, str]] = {
+    PROVIDER_EKT: "Eesti Keskkonnateenused AS",
+    PROVIDER_RAGNSELLS: "Ragn-Sells AS",
+    PROVIDER_TJT: "Tallinna Jäätmete Taaskasutuskeskus AS",
+}
 
 UPDATE_INTERVAL: Final = timedelta(hours=6)
 
@@ -27,7 +51,7 @@ WASTE_CATEGORIES: Final[tuple[tuple[str, tuple[str, ...]], ...]] = (
     ("garden", ("aia", "haljastus")),
     ("bulky", ("suurjäät",)),
     ("hazardous", ("ohtlik",)),
-    ("mixed", ("sega", "olme")),
+    ("mixed", ("sega", "olme")),  # segaolmejäätmed, olmejäätmed
 )
 
 CATEGORY_ICONS: Final[dict[str | None, str]] = {

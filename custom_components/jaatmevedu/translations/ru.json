@@ -1,0 +1,259 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Кто вывозит ваш мусор?",
+        "description": "Выберите перевозчика. Eesti Keskkonnateenused обслуживает большую часть Эстонии, в том числе Маарду, Виймси, Раэ, Тарту и шесть районов Таллина; Ragn-Sells — Пярну, Сауэ, Козе, Тапа, Тюри, часть Тартумаа и Ида-Вирумаа; TJT публикует только Saku.",
+        "menu_options": {
+          "ekt": "Eesti Keskkonnateenused",
+          "ragnsells": "Ragn-Sells",
+          "tjt": "TJT (Tallinna Jäätmete Taaskasutuskeskus)"
+        }
+      },
+      "ekt": {
+        "title": "Eesti Keskkonnateenused",
+        "description": "Введите номер договора (lepingu number) со счёта или из e-teenindus. Проверить номер можно [на странице следующего вывоза]({lookup_url}).",
+        "data": {
+          "contract_number": "Номер договора"
+        },
+        "data_description": {
+          "contract_number": "Только цифры, как на счёте."
+        }
+      },
+      "ragnsells": {
+        "title": "Ragn-Sells",
+        "description": "Выберите район, затем найдите адрес или введите код клиента (kliendikood) со счёта Ragn-Sells. Ragn-Sells публично показывает не все адреса: если дом не находится, используйте код клиента. [Открытая таблица графиков]({lookup_url}).",
+        "data": {
+          "area": "Район",
+          "search": "Адрес",
+          "client_code": "Код клиента"
+        },
+        "data_description": {
+          "search": "Начало названия улицы, например «Tallinna mnt».",
+          "client_code": "Необязательно; вместо адреса."
+        }
+      },
+      "tjt": {
+        "title": "TJT (Tallinna Jäätmete Taaskasutuskeskus)",
+        "description": "TJT публикует графики только для Saku vald; для районов Таллина нужен личный кабинет TJT. [Открытая страница графиков]({lookup_url}).",
+        "data": {
+          "area": "Район",
+          "search": "Адрес"
+        },
+        "data_description": {
+          "search": "Начало названия улицы, например «Tallinna mnt»."
+        }
+      },
+      "pick": {
+        "title": "Выберите адрес",
+        "description": "{provider} нашёл эти адреса.",
+        "data": {
+          "address": "Адрес"
+        }
+      }
+    },
+    "error": {
+      "invalid_contract": "Номер договора должен состоять только из цифр.",
+      "contract_not_found": "Eesti Keskkonnateenused не знает такого номера договора.",
+      "not_found": "У перевозчика нет графика для этого.",
+      "cannot_connect": "Не удалось связаться с перевозчиком. Попробуйте позже.",
+      "no_results": "Подходящих адресов нет. Попробуйте поиск короче или код клиента.",
+      "missing_query": "Введите адрес или код клиента."
+    },
+    "abort": {
+      "already_configured": "Это уже добавлено.",
+      "cannot_connect": "Не удалось связаться с перевозчиком. Попробуйте позже."
+    }
+  },
+  "entity": {
+    "calendar": {
+      "collections": {
+        "name": "Вывоз мусора"
+      }
+    },
+    "sensor": {
+      "next_collection": {
+        "name": "Следующий вывоз",
+        "state_attributes": {
+          "waste_types": {
+            "name": "Виды отходов"
+          },
+          "days_until": {
+            "name": "Дней осталось"
+          }
+        }
+      },
+      "days_until_next": {
+        "name": "Дней до вывоза"
+      },
+      "glass": {
+        "name": "Стекло",
+        "state_attributes": {
+          "waste_type": {
+            "name": "Название у перевозчика"
+          },
+          "container": {
+            "name": "Контейнер"
+          },
+          "days_until": {
+            "name": "Дней осталось"
+          },
+          "frequency_days": {
+            "name": "Каждые N дней"
+          },
+          "weekdays": {
+            "name": "Дни недели"
+          }
+        }
+      },
+      "packaging": {
+        "name": "Упаковка",
+        "state_attributes": {
+          "waste_type": {
+            "name": "Название у перевозчика"
+          },
+          "container": {
+            "name": "Контейнер"
+          },
+          "days_until": {
+            "name": "Дней осталось"
+          },
+          "frequency_days": {
+            "name": "Каждые N дней"
+          },
+          "weekdays": {
+            "name": "Дни недели"
+          }
+        }
+      },
+      "paper": {
+        "name": "Бумага и картон",
+        "state_attributes": {
+          "waste_type": {
+            "name": "Название у перевозчика"
+          },
+          "container": {
+            "name": "Контейнер"
+          },
+          "days_until": {
+            "name": "Дней осталось"
+          },
+          "frequency_days": {
+            "name": "Каждые N дней"
+          },
+          "weekdays": {
+            "name": "Дни недели"
+          }
+        }
+      },
+      "bio": {
+        "name": "Биоотходы",
+        "state_attributes": {
+          "waste_type": {
+            "name": "Название у перевозчика"
+          },
+          "container": {
+            "name": "Контейнер"
+          },
+          "days_until": {
+            "name": "Дней осталось"
+          },
+          "frequency_days": {
+            "name": "Каждые N дней"
+          },
+          "weekdays": {
+            "name": "Дни недели"
+          }
+        }
+      },
+      "garden": {
+        "name": "Садовые отходы",
+        "state_attributes": {
+          "waste_type": {
+            "name": "Название у перевозчика"
+          },
+          "container": {
+            "name": "Контейнер"
+          },
+          "days_until": {
+            "name": "Дней осталось"
+          },
+          "frequency_days": {
+            "name": "Каждые N дней"
+          },
+          "weekdays": {
+            "name": "Дни недели"
+          }
+        }
+      },
+      "bulky": {
+        "name": "Крупногабаритные отходы",
+        "state_attributes": {
+          "waste_type": {
+            "name": "Название у перевозчика"
+          },
+          "container": {
+            "name": "Контейнер"
+          },
+          "days_until": {
+            "name": "Дней осталось"
+          },
+          "frequency_days": {
+            "name": "Каждые N дней"
+          },
+          "weekdays": {
+            "name": "Дни недели"
+          }
+        }
+      },
+      "hazardous": {
+        "name": "Опасные отходы",
+        "state_attributes": {
+          "waste_type": {
+            "name": "Название у перевозчика"
+          },
+          "container": {
+            "name": "Контейнер"
+          },
+          "days_until": {
+            "name": "Дней осталось"
+          },
+          "frequency_days": {
+            "name": "Каждые N дней"
+          },
+          "weekdays": {
+            "name": "Дни недели"
+          }
+        }
+      },
+      "mixed": {
+        "name": "Смешанные отходы",
+        "state_attributes": {
+          "waste_type": {
+            "name": "Название у перевозчика"
+          },
+          "container": {
+            "name": "Контейнер"
+          },
+          "days_until": {
+            "name": "Дней осталось"
+          },
+          "frequency_days": {
+            "name": "Каждые N дней"
+          },
+          "weekdays": {
+            "name": "Дни недели"
+          }
+        }
+      }
+    }
+  },
+  "exceptions": {
+    "not_found": {
+      "message": "У перевозчика больше нет графика для этой записи. Удалите её и добавьте заново."
+    },
+    "update_failed": {
+      "message": "Не удалось получить даты вывоза: {error}"
+    }
+  }
+}

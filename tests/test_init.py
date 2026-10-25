@@ -17,9 +17,11 @@ from pytest_homeassistant_custom_component.components.diagnostics import (
 from pytest_homeassistant_custom_component.test_util.aiohttp import AiohttpClientMocker
 from pytest_homeassistant_custom_component.typing import ClientSessionGenerator
 
-from custom_components.keskkonnateenused.const import API_URL, UPDATE_INTERVAL
+from custom_components.jaatmevedu.const import UPDATE_INTERVAL
+from custom_components.jaatmevedu.providers.ekt import API_URL
 
-from .conftest import ADDRESS, CONTRACT, rows
+from .conftest import ADDRESS, CONTRACT
+from .conftest import ekt_rows as rows
 
 TODAY = "2026-10-25 12:00:00+02:00"
 
@@ -29,7 +31,7 @@ def _ids(hass: HomeAssistant) -> dict[str, str]:
     return {
         str(e.unique_id): e.entity_id
         for e in registry.entities.values()
-        if e.platform == "keskkonnateenused"
+        if e.platform == "jaatmevedu"
     }
 
 
@@ -222,5 +224,5 @@ async def test_diagnostics(
     text = str(result)
     assert CONTRACT not in text
     assert ADDRESS not in text
-    assert result["discharges"][0]["waste_type"] == "Segaolmejäätmed"
-    assert result["discharges"][0]["date"] == "2026-10-28"
+    assert result["collections"][0]["waste_type"] == "Segaolmejäätmed"
+    assert result["collections"][0]["date"] == "2026-10-28"

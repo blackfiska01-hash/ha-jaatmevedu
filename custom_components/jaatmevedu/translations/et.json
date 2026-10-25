@@ -1,0 +1,259 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Kes teie jäätmeid veab?",
+        "description": "Valige vedaja. Eesti Keskkonnateenused teenindab suuremat osa Eestist, sh Maardut, Viimsit, Raed, Tartut ja kuut Tallinna linnaosa; Ragn-Sells Pärnut, Sauet, Kose, Tapat, Türit ning osa Tartu- ja Ida-Virumaast; TJT avaldab ainult Saku graafikud.",
+        "menu_options": {
+          "ekt": "Eesti Keskkonnateenused",
+          "ragnsells": "Ragn-Sells",
+          "tjt": "TJT (Tallinna Jäätmete Taaskasutuskeskus)"
+        }
+      },
+      "ekt": {
+        "title": "Eesti Keskkonnateenused",
+        "description": "Sisestage lepingu number arvelt või iseteenindusest. Numbrit saab kontrollida [järgmise veopäeva lehel]({lookup_url}).",
+        "data": {
+          "contract_number": "Lepingu number"
+        },
+        "data_description": {
+          "contract_number": "Ainult numbrid, nagu arvel."
+        }
+      },
+      "ragnsells": {
+        "title": "Ragn-Sells",
+        "description": "Valige piirkond ning otsige aadressi järgi või sisestage Ragn-Sellsi arvelt kliendikood. Ragn-Sells näitab avalikult ainult osa aadresse, nii et kui teie maja ei leita, kasutage kliendikoodi. [Avalik graafikute tabel]({lookup_url}).",
+        "data": {
+          "area": "Piirkond",
+          "search": "Aadress",
+          "client_code": "Kliendikood"
+        },
+        "data_description": {
+          "search": "Tänava nime algus, näiteks „Tallinna mnt“.",
+          "client_code": "Valikuline; aadressi asemel."
+        }
+      },
+      "tjt": {
+        "title": "TJT (Tallinna Jäätmete Taaskasutuskeskus)",
+        "description": "TJT avaldab graafikud ainult Saku vallas; Tallinna linnaosade jaoks on vaja TJT iseteenindust. [Avalik graafikute leht]({lookup_url}).",
+        "data": {
+          "area": "Piirkond",
+          "search": "Aadress"
+        },
+        "data_description": {
+          "search": "Tänava nime algus, näiteks „Tallinna mnt“."
+        }
+      },
+      "pick": {
+        "title": "Valige aadress",
+        "description": "{provider} leidis need aadressid.",
+        "data": {
+          "address": "Aadress"
+        }
+      }
+    },
+    "error": {
+      "invalid_contract": "Lepingu number peab koosnema ainult numbritest.",
+      "contract_not_found": "Eesti Keskkonnateenused ei tunne seda lepingu numbrit.",
+      "not_found": "Vedajal ei ole selle kohta graafikut.",
+      "cannot_connect": "Vedajaga ei saanud ühendust. Proovige hiljem uuesti.",
+      "no_results": "Sobivaid aadresse ei leitud. Proovige lühemat otsingut või kliendikoodi.",
+      "missing_query": "Sisestage aadress või kliendikood."
+    },
+    "abort": {
+      "already_configured": "See on juba seadistatud.",
+      "cannot_connect": "Vedajaga ei saanud ühendust. Proovige hiljem uuesti."
+    }
+  },
+  "entity": {
+    "calendar": {
+      "collections": {
+        "name": "Jäätmeveod"
+      }
+    },
+    "sensor": {
+      "next_collection": {
+        "name": "Järgmine veopäev",
+        "state_attributes": {
+          "waste_types": {
+            "name": "Jäätmeliigid"
+          },
+          "days_until": {
+            "name": "Päevi jäänud"
+          }
+        }
+      },
+      "days_until_next": {
+        "name": "Päevi järgmise veoni"
+      },
+      "glass": {
+        "name": "Klaas",
+        "state_attributes": {
+          "waste_type": {
+            "name": "Vedaja nimetus"
+          },
+          "container": {
+            "name": "Konteiner"
+          },
+          "days_until": {
+            "name": "Päevi jäänud"
+          },
+          "frequency_days": {
+            "name": "Iga N päeva järel"
+          },
+          "weekdays": {
+            "name": "Nädalapäevad"
+          }
+        }
+      },
+      "packaging": {
+        "name": "Pakendid",
+        "state_attributes": {
+          "waste_type": {
+            "name": "Vedaja nimetus"
+          },
+          "container": {
+            "name": "Konteiner"
+          },
+          "days_until": {
+            "name": "Päevi jäänud"
+          },
+          "frequency_days": {
+            "name": "Iga N päeva järel"
+          },
+          "weekdays": {
+            "name": "Nädalapäevad"
+          }
+        }
+      },
+      "paper": {
+        "name": "Paber ja kartong",
+        "state_attributes": {
+          "waste_type": {
+            "name": "Vedaja nimetus"
+          },
+          "container": {
+            "name": "Konteiner"
+          },
+          "days_until": {
+            "name": "Päevi jäänud"
+          },
+          "frequency_days": {
+            "name": "Iga N päeva järel"
+          },
+          "weekdays": {
+            "name": "Nädalapäevad"
+          }
+        }
+      },
+      "bio": {
+        "name": "Biojäätmed",
+        "state_attributes": {
+          "waste_type": {
+            "name": "Vedaja nimetus"
+          },
+          "container": {
+            "name": "Konteiner"
+          },
+          "days_until": {
+            "name": "Päevi jäänud"
+          },
+          "frequency_days": {
+            "name": "Iga N päeva järel"
+          },
+          "weekdays": {
+            "name": "Nädalapäevad"
+          }
+        }
+      },
+      "garden": {
+        "name": "Aiajäätmed",
+        "state_attributes": {
+          "waste_type": {
+            "name": "Vedaja nimetus"
+          },
+          "container": {
+            "name": "Konteiner"
+          },
+          "days_until": {
+            "name": "Päevi jäänud"
+          },
+          "frequency_days": {
+            "name": "Iga N päeva järel"
+          },
+          "weekdays": {
+            "name": "Nädalapäevad"
+          }
+        }
+      },
+      "bulky": {
+        "name": "Suurjäätmed",
+        "state_attributes": {
+          "waste_type": {
+            "name": "Vedaja nimetus"
+          },
+          "container": {
+            "name": "Konteiner"
+          },
+          "days_until": {
+            "name": "Päevi jäänud"
+          },
+          "frequency_days": {
+            "name": "Iga N päeva järel"
+          },
+          "weekdays": {
+            "name": "Nädalapäevad"
+          }
+        }
+      },
+      "hazardous": {
+        "name": "Ohtlikud jäätmed",
+        "state_attributes": {
+          "waste_type": {
+            "name": "Vedaja nimetus"
+          },
+          "container": {
+            "name": "Konteiner"
+          },
+          "days_until": {
+            "name": "Päevi jäänud"
+          },
+          "frequency_days": {
+            "name": "Iga N päeva järel"
+          },
+          "weekdays": {
+            "name": "Nädalapäevad"
+          }
+        }
+      },
+      "mixed": {
+        "name": "Segaolmejäätmed",
+        "state_attributes": {
+          "waste_type": {
+            "name": "Vedaja nimetus"
+          },
+          "container": {
+            "name": "Konteiner"
+          },
+          "days_until": {
+            "name": "Päevi jäänud"
+          },
+          "frequency_days": {
+            "name": "Iga N päeva järel"
+          },
+          "weekdays": {
+            "name": "Nädalapäevad"
+          }
+        }
+      }
+    }
+  },
+  "exceptions": {
+    "not_found": {
+      "message": "Vedajal ei ole enam selle kirje graafikut. Eemaldage kirje ja lisage see uuesti."
+    },
+    "update_failed": {
+      "message": "Veopäevi ei õnnestunud laadida: {error}"
+    }
+  }
+}

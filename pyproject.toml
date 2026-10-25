@@ -3,9 +3,9 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "ha-keskkonnateenused"
-version = "0.1.0"
-description = "Home Assistant integration for Eesti Keskkonnateenused waste collection days"
+name = "ha-jaatmevedu"
+version = "0.2.0"
+description = "Home Assistant integration for Estonian waste collection days"
 requires-python = ">=3.13"
 license = "MIT"
 
@@ -39,7 +39,7 @@ ignore = ["E501"]
 [tool.mypy]
 python_version = "3.14"
 strict = true
-files = ["custom_components/keskkonnateenused"]
+files = ["custom_components/jaatmevedu"]
 
 [[tool.mypy.overrides]]
 module = "homeassistant.*"

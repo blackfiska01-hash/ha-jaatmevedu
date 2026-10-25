@@ -1,4 +1,4 @@
-"""Sensors for Eesti Keskkonnateenused."""
+"""Sensors for Eesti jäätmevedu."""
 
 from __future__ import annotations
 
@@ -12,10 +12,10 @@ from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 from homeassistant.util import dt as dt_util
 
-from .api import Discharge
 from .const import CATEGORY_ICONS, display_name, waste_category
-from .coordinator import KeskkonnateenusedConfigEntry, KeskkonnateenusedCoordinator
-from .entity import KeskkonnateenusedEntity
+from .coordinator import JaatmeveduConfigEntry, JaatmeveduCoordinator
+from .entity import JaatmeveduEntity
+from .providers import Collection
 
 PARALLEL_UPDATES = 0
 
@@ -37,7 +37,7 @@ def waste_key(waste_type: str) -> str:
 
 async def async_setup_entry(
     hass: HomeAssistant,
-    entry: KeskkonnateenusedConfigEntry,
+    entry: JaatmeveduConfigEntry,
     async_add_entities: AddConfigEntryEntitiesCallback,
 ) -> None:
     """Set up sensors, adding one per waste type as types appear."""
@@ -49,11 +49,11 @@ async def async_setup_entry(
     @callback
     def _add_new_waste_types() -> None:
         new: list[WasteTypeSensor] = []
-        for discharge in coordinator.data or ():
-            key = waste_key(discharge.waste_type)
+        for collection in coordinator.data or ():
+            key = waste_key(collection.waste_type)
             if key not in known:
                 known.add(key)
-                new.append(WasteTypeSensor(coordinator, key, discharge.waste_type))
+                new.append(WasteTypeSensor(coordinator, key, collection.waste_type))
         if new:
             async_add_entities(new)
 
@@ -61,22 +61,22 @@ async def async_setup_entry(
     entry.async_on_unload(coordinator.async_add_listener(_add_new_waste_types))
 
 
-def _next(discharges: list[Discharge]) -> list[Discharge]:
-    """All discharges on the earliest upcoming day."""
-    if not discharges:
+def _next(collections: list[Collection]) -> list[Collection]:
+    """All collections on the earliest upcoming day."""
+    if not collections:
         return []
-    first = min(d.date for d in discharges)
-    return [d for d in discharges if d.date == first]
+    first = min(d.date for d in collections)
+    return [d for d in collections if d.date == first]
 
 
-class NextCollectionSensor(KeskkonnateenusedEntity, SensorEntity):
+class NextCollectionSensor(JaatmeveduEntity, SensorEntity):
     """Date of the next collection of any waste type."""
 
     _attr_device_class = SensorDeviceClass.DATE
     _attr_translation_key = "next_collection"
     _attr_icon = "mdi:trash-can-outline"
 
-    def __init__(self, coordinator: KeskkonnateenusedCoordinator) -> None:
+    def __init__(self, coordinator: JaatmeveduCoordinator) -> None:
         super().__init__(coordinator, "next_collection")
 
     @property
@@ -89,12 +89,14 @@ class NextCollectionSensor(KeskkonnateenusedEntity, SensorEntity):
         upcoming = _next(self.coordinator.data or [])
         language = self.hass.config.language if self.hass else "en"
         return {
-            "waste_types": [display_name(d.waste_type, language) for d in upcoming],
+            "waste_types": list(
+                dict.fromkeys(display_name(d.waste_type, language) for d in upcoming)
+            ),
             "days_until": _days_until(upcoming[0].date) if upcoming else None,
         }
 
 
-class DaysUntilSensor(KeskkonnateenusedEntity, SensorEntity):
+class DaysUntilSensor(JaatmeveduEntity, SensorEntity):
     """Days left until the next collection (0 = today)."""
 
     _attr_device_class = SensorDeviceClass.DURATION
@@ -103,7 +105,7 @@ class DaysUntilSensor(KeskkonnateenusedEntity, SensorEntity):
     _attr_translation_key = "days_until_next"
     _attr_icon = "mdi:calendar-clock"
 
-    def __init__(self, coordinator: KeskkonnateenusedCoordinator) -> None:
+    def __init__(self, coordinator: JaatmeveduCoordinator) -> None:
         super().__init__(coordinator, "days_until_next")
 
     @property
@@ -112,14 +114,12 @@ class DaysUntilSensor(KeskkonnateenusedEntity, SensorEntity):
         return _days_until(upcoming[0].date) if upcoming else None
 
 
-class WasteTypeSensor(KeskkonnateenusedEntity, SensorEntity):
+class WasteTypeSensor(JaatmeveduEntity, SensorEntity):
     """Next collection date for one waste type."""
 
     _attr_device_class = SensorDeviceClass.DATE
 
-    def __init__(
-        self, coordinator: KeskkonnateenusedCoordinator, key: str, waste_type: str
-    ) -> None:
+    def __init__(self, coordinator: JaatmeveduCoordinator, key: str, waste_type: str) -> None:
         super().__init__(coordinator, f"waste_{key}")
         self._key = key
         category = waste_category(waste_type)
@@ -129,7 +129,7 @@ class WasteTypeSensor(KeskkonnateenusedEntity, SensorEntity):
             self._attr_name = waste_type
         self._attr_icon = CATEGORY_ICONS[category]
 
-    def _mine(self) -> list[Discharge]:
+    def _mine(self) -> list[Collection]:
         return [d for d in self.coordinator.data or () if waste_key(d.waste_type) == self._key]
 
     @property
@@ -141,8 +141,16 @@ class WasteTypeSensor(KeskkonnateenusedEntity, SensorEntity):
     def extra_state_attributes(self) -> dict[str, Any]:
         mine = self._mine()
         first = min(mine, key=lambda d: d.date) if mine else None
-        return {
-            "waste_type": first.waste_type if first else None,
-            "container": first.container if first else None,
-            "days_until": _days_until(first.date if first else None),
+        if first is None:
+            return {"days_until": None}
+        attrs: dict[str, Any] = {
+            "waste_type": first.waste_type,
+            "days_until": _days_until(first.date),
         }
+        if first.container:
+            attrs["container"] = first.container
+        if first.frequency_days:
+            attrs["frequency_days"] = first.frequency_days
+        if first.weekdays:
+            attrs["weekdays"] = list(first.weekdays)
+        return attrs

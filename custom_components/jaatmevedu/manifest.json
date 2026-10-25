@@ -1,0 +1,15 @@
+{
+  "domain": "jaatmevedu",
+  "name": "Eesti jäätmevedu",
+  "codeowners": [
+    "@blackfiska01-hash"
+  ],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/blackfiska01-hash/ha-jaatmevedu",
+  "integration_type": "service",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/blackfiska01-hash/ha-jaatmevedu/issues",
+  "requirements": [],
+  "version": "0.2.0"
+}

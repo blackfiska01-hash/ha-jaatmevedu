@@ -1,0 +1,259 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Who collects your waste?",
+        "description": "Pick your carrier. Eesti Keskkonnateenused serves most of Estonia, including Maardu, Viimsi, Rae, Tartu and six Tallinn districts; Ragn-Sells serves Pärnu, Saue, Kose, Tapa, Türi and parts of Tartu and Ida-Viru counties; TJT publishes only Saku.",
+        "menu_options": {
+          "ekt": "Eesti Keskkonnateenused",
+          "ragnsells": "Ragn-Sells",
+          "tjt": "TJT (Tallinna Jäätmete Taaskasutuskeskus)"
+        }
+      },
+      "ekt": {
+        "title": "Eesti Keskkonnateenused",
+        "description": "Enter the contract number (lepingu number) from your invoice or self-service portal. You can check it on [the carrier's next collection day page]({lookup_url}).",
+        "data": {
+          "contract_number": "Contract number"
+        },
+        "data_description": {
+          "contract_number": "Digits only, as printed on the invoice."
+        }
+      },
+      "ragnsells": {
+        "title": "Ragn-Sells",
+        "description": "Choose your area, then either search by address or enter your client code (kliendikood) from a Ragn-Sells invoice. Ragn-Sells shows only some addresses publicly, so if your house is not found, use the client code. [Public schedule table]({lookup_url}).",
+        "data": {
+          "area": "Area",
+          "search": "Address",
+          "client_code": "Client code"
+        },
+        "data_description": {
+          "search": "Start of the street name, for example \"Tallinna mnt\".",
+          "client_code": "Optional; use it instead of the address."
+        }
+      },
+      "tjt": {
+        "title": "TJT (Tallinna Jäätmete Taaskasutuskeskus)",
+        "description": "TJT publishes schedules only for Saku vald; its Tallinn districts need the TJT self-service login. [Public schedule page]({lookup_url}).",
+        "data": {
+          "area": "Area",
+          "search": "Address"
+        },
+        "data_description": {
+          "search": "Start of the street name, for example \"Tallinna mnt\"."
+        }
+      },
+      "pick": {
+        "title": "Choose the address",
+        "description": "{provider} found these addresses.",
+        "data": {
+          "address": "Address"
+        }
+      }
+    },
+    "error": {
+      "invalid_contract": "The contract number should contain only digits.",
+      "contract_not_found": "Eesti Keskkonnateenused does not know this contract number.",
+      "not_found": "The carrier has no schedule for this.",
+      "cannot_connect": "Could not reach the carrier. Try again later.",
+      "no_results": "No matching addresses. Try a shorter search or the client code.",
+      "missing_query": "Enter an address or a client code."
+    },
+    "abort": {
+      "already_configured": "This is already set up.",
+      "cannot_connect": "Could not reach the carrier. Try again later."
+    }
+  },
+  "entity": {
+    "calendar": {
+      "collections": {
+        "name": "Collections"
+      }
+    },
+    "sensor": {
+      "next_collection": {
+        "name": "Next collection",
+        "state_attributes": {
+          "waste_types": {
+            "name": "Waste types"
+          },
+          "days_until": {
+            "name": "Days until"
+          }
+        }
+      },
+      "days_until_next": {
+        "name": "Days until next collection"
+      },
+      "glass": {
+        "name": "Glass",
+        "state_attributes": {
+          "waste_type": {
+            "name": "Carrier's name"
+          },
+          "container": {
+            "name": "Container"
+          },
+          "days_until": {
+            "name": "Days until"
+          },
+          "frequency_days": {
+            "name": "Every N days"
+          },
+          "weekdays": {
+            "name": "Weekdays"
+          }
+        }
+      },
+      "packaging": {
+        "name": "Packaging",
+        "state_attributes": {
+          "waste_type": {
+            "name": "Carrier's name"
+          },
+          "container": {
+            "name": "Container"
+          },
+          "days_until": {
+            "name": "Days until"
+          },
+          "frequency_days": {
+            "name": "Every N days"
+          },
+          "weekdays": {
+            "name": "Weekdays"
+          }
+        }
+      },
+      "paper": {
+        "name": "Paper and cardboard",
+        "state_attributes": {
+          "waste_type": {
+            "name": "Carrier's name"
+          },
+          "container": {
+            "name": "Container"
+          },
+          "days_until": {
+            "name": "Days until"
+          },
+          "frequency_days": {
+            "name": "Every N days"
+          },
+          "weekdays": {
+            "name": "Weekdays"
+          }
+        }
+      },
+      "bio": {
+        "name": "Biowaste",
+        "state_attributes": {
+          "waste_type": {
+            "name": "Carrier's name"
+          },
+          "container": {
+            "name": "Container"
+          },
+          "days_until": {
+            "name": "Days until"
+          },
+          "frequency_days": {
+            "name": "Every N days"
+          },
+          "weekdays": {
+            "name": "Weekdays"
+          }
+        }
+      },
+      "garden": {
+        "name": "Garden waste",
+        "state_attributes": {
+          "waste_type": {
+            "name": "Carrier's name"
+          },
+          "container": {
+            "name": "Container"
+          },
+          "days_until": {
+            "name": "Days until"
+          },
+          "frequency_days": {
+            "name": "Every N days"
+          },
+          "weekdays": {
+            "name": "Weekdays"
+          }
+        }
+      },
+      "bulky": {
+        "name": "Bulky waste",
+        "state_attributes": {
+          "waste_type": {
+            "name": "Carrier's name"
+          },
+          "container": {
+            "name": "Container"
+          },
+          "days_until": {
+            "name": "Days until"
+          },
+          "frequency_days": {
+            "name": "Every N days"
+          },
+          "weekdays": {
+            "name": "Weekdays"
+          }
+        }
+      },
+      "hazardous": {
+        "name": "Hazardous waste",
+        "state_attributes": {
+          "waste_type": {
+            "name": "Carrier's name"
+          },
+          "container": {
+            "name": "Container"
+          },
+          "days_until": {
+            "name": "Days until"
+          },
+          "frequency_days": {
+            "name": "Every N days"
+          },
+          "weekdays": {
+            "name": "Weekdays"
+          }
+        }
+      },
+      "mixed": {
+        "name": "Mixed waste",
+        "state_attributes": {
+          "waste_type": {
+            "name": "Carrier's name"
+          },
+          "container": {
+            "name": "Container"
+          },
+          "days_until": {
+            "name": "Days until"
+          },
+          "frequency_days": {
+            "name": "Every N days"
+          },
+          "weekdays": {
+            "name": "Weekdays"
+          }
+        }
+      }
+    }
+  },
+  "exceptions": {
+    "not_found": {
+      "message": "The carrier no longer has a schedule for this entry. Remove it and add it again."
+    },
+    "update_failed": {
+      "message": "Could not fetch collection days: {error}"
+    }
+  }
+}

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from custom_components.keskkonnateenused.const import display_name, waste_category
+from custom_components.jaatmevedu.const import display_name, waste_category
 
 
 @pytest.mark.parametrize(
