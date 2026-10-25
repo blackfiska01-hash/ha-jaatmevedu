@@ -1,0 +1,52 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ha-keskkonnateenused"
+version = "0.1.0"
+description = "Home Assistant integration for Eesti Keskkonnateenused waste collection days"
+requires-python = ">=3.13"
+license = "MIT"
+
+[project.optional-dependencies]
+dev = [
+  "pytest",
+  "pytest-asyncio",
+  "pytest-cov",
+  # The exact pin selects the Home Assistant release (it pins homeassistant itself).
+  "pytest-homeassistant-custom-component==0.13.367",
+  "freezegun",
+  "ruff",
+  "mypy",
+]
+
+[tool.setuptools]
+packages = []
+
+[tool.ruff]
+target-version = "py313"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "C4", "SIM", "ARG", "RUF"]
+ignore = ["E501"]
+
+[tool.ruff.lint.per-file-ignores]
+# Home Assistant platform hooks have fixed signatures that include an unused `hass`.
+"custom_components/**" = ["ARG001", "ARG002"]
+
+[tool.mypy]
+python_version = "3.14"
+strict = true
+files = ["custom_components/keskkonnateenused"]
+
+[[tool.mypy.overrides]]
+module = "homeassistant.*"
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]
+addopts = "--tb=short"

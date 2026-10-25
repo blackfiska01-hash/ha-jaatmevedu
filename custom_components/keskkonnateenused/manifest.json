@@ -1,0 +1,13 @@
+{
+  "domain": "keskkonnateenused",
+  "name": "Eesti Keskkonnateenused",
+  "codeowners": ["@blackfiska01-hash"],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/blackfiska01-hash/ha-keskkonnateenused",
+  "integration_type": "service",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/blackfiska01-hash/ha-keskkonnateenused/issues",
+  "requirements": [],
+  "version": "0.1.0"
+}
