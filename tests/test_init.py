@@ -5,6 +5,7 @@ from __future__ import annotations
 from datetime import timedelta
 
 import aiohttp
+import pytest
 from freezegun.api import FrozenDateTimeFactory
 from homeassistant.config_entries import ConfigEntryState
 from homeassistant.core import HomeAssistant
@@ -204,7 +205,9 @@ async def test_russian_names(
     hass: HomeAssistant,
     api: AiohttpClientMocker,  # noqa: ARG001
     entry: MockConfigEntry,
+    freezer: FrozenDateTimeFactory,
 ) -> None:
+    freezer.move_to(TODAY)
     await hass.config.async_update(language="ru")
     await _setup(hass, entry)
     ids = _ids(hass)
@@ -213,6 +216,10 @@ async def test_russian_names(
     assert state.attributes["waste_types"] == ["Смешанные отходы"]
 
 
+# A marker, not ``freezer.move_to``: the auth token behind ``hass_client`` is
+# issued during fixture setup, and moving the clock back after that makes the
+# token "issued in the future", so the request is rejected with 401.
+@pytest.mark.freeze_time(TODAY)
 async def test_diagnostics(
     hass: HomeAssistant,
     hass_client: ClientSessionGenerator,
